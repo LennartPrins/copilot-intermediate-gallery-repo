@@ -1,6 +1,6 @@
 # Photo Gallery & Portfolio
 
-A professional photo gallery and portfolio application built with Next.js 15, TypeScript, and Tailwind CSS. This project is designed for **demoing GitHub Copilot features** in a real-world, component-driven Next.js application. The included demos showcase how Copilot can assist with code generation, refactoring, UI building, and more.
+A professional photo gallery and portfolio application built with Python Flask and Tailwind CSS. This project is designed for **demoing GitHub Copilot features** in a real-world web application. The included demos showcase how Copilot can assist with code generation, refactoring, UI building, and more.
 
 ## Demos
 
@@ -25,8 +25,8 @@ After finishing the demo, don't forget this quick follow-up:
 
 ### Technical Requirements
 
-- **Node.js** v18 or newer
-- **npm** (or yarn, pnpm, bun)
+- **Python** 3.8 or newer
+- **pip** (Python package manager)
 
 ### Quick Start with GitHub Codespaces
 
@@ -37,37 +37,41 @@ The fastest way to get started is using GitHub Codespaces:
 3. Click **"Create codespace on main"** (or your current branch)
 4. Wait for the codespace to build and start
 
-The codespace will automatically:
-- Install all dependencies (`npm install`)
-- Start the development server (`npm run dev`)
-- Configure GitHub Copilot and essential VS Code extensions
-- Forward port 3000 for the Next.js application
-
-Once ready, you can access the application at the forwarded port URL provided in the terminal.
+The codespace will automatically configure GitHub Copilot and essential VS Code extensions.
 
 ### Local Installation
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/ps-copilot-sandbox/copilot-intermediate-gallery-repo.git
-   cd gallery-repo
+   git clone https://github.com/LennartPrins/copilot-intermediate-gallery-repo.git
+   cd copilot-intermediate-gallery-repo
    ```
-2. Install dependencies:
+
+2. Create a virtual environment (recommended):
    ```bash
-   npm install
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
-3. Start the development server:
+
+3. Install dependencies:
    ```bash
-   npm run dev
+   pip install -r requirements.txt
    ```
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+4. Start the development server:
+   ```bash
+   python app.py
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Project Structure
 
 ```bash
-src/
-├── app/                 # Next.js 15 App Router pages
-├── components/          # Reusable React components
-├── lib/                 # Utility functions and helpers
-demos/                   # Demo guides and templates
+├── app.py               # Main Flask application
+├── lib/                 # Mock data and utilities
+├── templates/           # Jinja2 HTML templates
+├── static/              # Static files and uploads
+├── demos/               # Demo guides and templates
+└── requirements.txt     # Python dependencies
 ```
