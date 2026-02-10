@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Gallery - Photo Gallery & Portfolio{% endblock %}
+
+{% block content %}
+<div class="page-gradient">
+    <section class="container mx-auto px-4 py-16">
+        <!-- Hero -->
+        <div class="mb-12">
+            <h1 class="text-4xl font-bold text-slate-900 dark:text-white mb-4">
+                Photo Gallery
+            </h1>
+            <p class="text-lg text-slate-600 dark:text-slate-300">
+                Browse and filter through our collection
+            </p>
+        </div>
+
+        <!-- Filters -->
+        <div class="mb-8 flex gap-4 flex-wrap items-center">
+            <!-- Search -->
+            <form method="get" class="flex gap-2">
+                <input 
+                    type="text" 
+                    name="search" 
+                    value="{{ search_query }}"
+                    placeholder="Search photos..."
+                    class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+                >
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    Search
+                </button>
+            </form>
+
+            <!-- Tag Filter -->
+            <div class="flex gap-2 flex-wrap">
+                <a href="/gallery?tag=all" 
+                   class="px-4 py-2 rounded-lg {% if selected_tag == 'all' %}bg-blue-600 text-white{% else %}bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300{% endif %}">
+                    All
+                </a>
+                {% for tag in tags %}
+                <a href="/gallery?tag={{ tag }}" 
+                   class="px-4 py-2 rounded-lg {% if selected_tag == tag %}bg-blue-600 text-white{% else %}bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300{% endif %}">
+                    {{ tag }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Photo Grid -->
+        <div class="grid md:grid-cols-3 gap-6">
+            {% for photo in photos %}
+            <div class="card-base overflow-hidden group">
+                <div class="aspect-video bg-slate-200 dark:bg-slate-700 flex items-center justify-center relative">
+                    <span class="text-5xl">🖼️</span>
+                    <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-4">
+                        <button class="text-white text-2xl" onclick="likePhoto('{{ photo.id }}')">❤️</button>
+                        <button class="text-white text-2xl" onclick="downloadPhoto('{{ photo.id }}')">⬇️</button>
+                        <button class="text-white text-2xl">🔗</button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-slate-900 dark:text-white mb-2">
+                        {{ photo.title }}
+                    </h3>
+                    {% if photo.photographer %}
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">
+                        by {{ photo.photographer }}
+                    </p>
+                    {% endif %}
+                    <div class="flex gap-3 text-sm text-slate-600 dark:text-slate-300 mb-3">
+                        <span id="likes-{{ photo.id }}">❤️ {{ photo.likes }}</span>
+                        <span id="downloads-{{ photo.id }}">⬇️ {{ photo.downloads }}</span>
+                        <span>👁️ {{ photo.views }}</span>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        {% for tag in photo.tags %}
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs rounded">
+                            {{ tag }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if photos|length == 0 %}
+        <div class="text-center py-16">
+            <p class="text-xl text-slate-600 dark:text-slate-400">
+                No photos found matching your criteria.
+            </p>
+        </div>
+        {% endif %}
+    </section>
+</div>
+
+<script>
+function likePhoto(photoId) {
+    fetch(`/api/photos/${photoId}/like`, {
+        method: 'POST',
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById(`likes-${photoId}`).textContent = `❤️ ${data.likes}`;
+        }
+    });
+}
+
+function downloadPhoto(photoId) {
+    fetch(`/api/photos/${photoId}/download`, {
+        method: 'POST',
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById(`downloads-${photoId}`).textContent = `⬇️ ${data.downloads}`;
+        }
+    });
+}
+</script>
+{% endblock %}

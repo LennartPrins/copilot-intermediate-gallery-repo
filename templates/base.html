@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Photo Gallery & Portfolio{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --background: #ffffff;
+            --foreground: #171717;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #0a0a0a;
+                --foreground: #ededed;
+            }
+        }
+
+        body {
+            background: var(--background);
+            color: var(--foreground);
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .page-gradient {
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .page-gradient {
+                background: linear-gradient(to bottom right, #0f172a, #1e293b);
+            }
+        }
+
+        .card-base {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .card-base {
+                background-color: #1e293b;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-slate-800 shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="text-2xl font-bold text-slate-900 dark:text-white">
+                    📸 Gallery
+                </a>
+                <div class="flex gap-6">
+                    <a href="/" class="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Home</a>
+                    <a href="/gallery" class="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Gallery</a>
+                    <a href="/upload" class="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Upload</a>
+                    <a href="/admin" class="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Admin</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-800 mt-16 py-8">
+        <div class="container mx-auto px-4 text-center text-slate-600 dark:text-slate-400">
+            <p>&copy; 2024 Photo Gallery & Portfolio. Built with Python & Flask.</p>
+        </div>
+    </footer>
+</body>
+</html>

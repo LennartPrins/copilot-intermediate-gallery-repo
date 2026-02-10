@@ -1,29 +1,31 @@
 {
-  "name": "Next.js Photo Gallery - Intermediate Copilot",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "name": "Python Flask Photo Gallery - Intermediate Copilot",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "hostRequirements": {
     "cpus": 4
   },
   "forwardPorts": [3000],
   "portsAttributes": {
     "3000": {
-      "label": "Next.js App",
+      "label": "Flask App",
       "onAutoForward": "notify"
     }
   },
-  "postCreateCommand": "npm install && npm run dev",
+  "postCreateCommand": "pip install -r requirements.txt",
   "customizations": {
     "vscode": {
       "extensions": [
         "GitHub.copilot",
         "GitHub.copilot-chat",
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
         "bradlc.vscode-tailwindcss"
       ],
       "settings": {
         "editor.formatOnSave": true,
-        "typescript.tsdk": "node_modules/typescript/lib"
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.formatting.provider": "black"
       }
     }
   }
